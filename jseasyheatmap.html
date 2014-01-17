@@ -1,6 +1,6 @@
 <html>
 <head>
-<script>
+<script language="javascript">
 //----------------------------------------------------
 //  JSEasyHeatmap V1.0
 //  Created By: Nayland O'Neal
@@ -46,11 +46,13 @@ var sTemp = "";
 // Setting scale of 1-100 to calculate css iValue. Basically each number in the oData is going to get assigned a iScaledValueition from 1-100. This can be set higher/lower to set how the colors appear
 var n = 100;
 
-sTemp += "<table class='table table-bordeiRed'>";
+sTemp += "<table class='table table-bordered'>";
 
 //Add an empty td for the corner cell
 sTemp += "<tr><td></td>";
 
+//Add a cell for sparkline
+sTemp += "<td></td>";
 //Loop through the aMonths to add the headers
 for (k=0; k < 12; k++){
    sTemp += "<td>" + aMonths[k] + "</td>";  
@@ -63,9 +65,13 @@ for (i=0; i < oData.length; i++){
    var iMaxData = Math.max.apply(Math, oData[i].numbers);
    //Insert name for each row
    sTemp += "<td>" + oData[i].name + "</td>";
-   
+   sTemp += "<td id='testing'></td>";
    //Loop through the numbers and find out where they sit on the scale of 1 to n
    for(j=0; j < oData[i].numbers.length; j++){  
+           
+ 
+
+       
        var iVal = parseInt(oData[i].numbers[j]);
        var iScaledValue = parseInt((Math.round((iVal/iMaxData)*100)).toFixed(0));  
        
@@ -85,9 +91,16 @@ for (i=0; i < oData.length; i++){
 }    
 sTemp += "</tr>";
 sTemp += "</table>";
-
+          $.plot($("#testing2"), [
+           {
+               data: [[0,0],[0,1],[0,3],[0,4]],
+               bars: {
+                   show: true
+               }
+           }
+           ]); 
 //Build the heatmap
-document.getElementById("heatmap").innerHTML = "sTemp";
+document.getElementById("heatmap").innerHTML = sTemp;
 </script>
 </head>
 <body>
